@@ -1,0 +1,48 @@
+<section id="edit">
+	<form action="" method="POST">
+		<input type='hidden' name='action' value='update_translation'/>
+		{$total = count($strings)}
+		{$count = 0;}
+		{loop="$strings"}
+			<div class='row vertical-center-wrapper'>
+				<div class='original col-sm-6'>
+					<span id='original_{$key}'>{$value.html_original}</span>
+					<span class="label label-default pull-right lc-label {if="$value.rows > 1 && $value.placeholders > 0"}three-lined-lc-label{elseif="$value.rows > 1 || $value.placeholders > 0"}two-lined-lc-label{/if}">
+						<span data-count-for='{$key}'>{$value.translation|strlen}</span> chars
+						{if="$value.subkey && $value.rows > 1"}
+						<br/>
+						<span data-lines-for='{$key}' data-required='{$value.rows}'>?</span> lines
+						{/if}
+						{if="$value.placeholders > 0"}
+						<br/>
+						<span data-placeholders-for='{$key}' data-required='{$value.placeholders}'>?</span> placeholders
+						{/if}
+					</span>
+					{if="$value.key != 'ox'"}
+                        <span class="label {if="$value.status == 'OUTDATED'"}label-warning{elseif="$value.status == 'VALID'"}label-success{else}label-default{/if} pull-right">
+                            {if="$value.subkey"}
+                                {$value.subkey}
+                            {else}
+                                {$value.key}
+                            {/if}
+                        </span>
+                    {/if}
+				</div>
+				<div class='col-md-6'>
+					{if="$value.subkey && $value.rows > 1"}
+						<textarea rows='{$value.rows}' data-key='{$key}' name='translate_{$key}' placeholder='{$value.translation}'>{$value.translation}</textarea>
+					{else}
+						<input type='text' data-key='{$key}' name='translate_{$key}' placeholder='{$value.translation}' value='{$value.translation}'/>
+					{/if}
+				</div>
+			</div>
+			{$count = $count + 1}
+			{if="$count < $total"}
+				<hr>
+			{/if}
+		{/loop}
+
+		<br/>
+		<button type='submit' class='btn btn-primary btn-block'>Save</button>
+	</form>
+</section>

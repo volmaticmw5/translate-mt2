@@ -1,0 +1,44 @@
+<div class='row'>
+	<div class="col-md-3 qname text-center">
+		<a href='?page=edit&amp;key=^single'>Simple strings</a>
+	</div>
+	<div class="col-md-8">
+		<div class="meter {if="$singlekeys.translated/$singlekeys.count < 1"}red{/if}">
+			<span class='progress-info'>{$singlekeys.translated}/{$singlekeys.count} translated</span>
+			<span class="bar" style="width: {$singlekeys.translated/$singlekeys.count*100}%"></span>
+		</div>
+	</div>
+</div>
+<hr/>
+
+{loop="$strings"}
+	<div class="row">
+		<div class="col-md-3 qname text-center">
+			<a href='?page=edit&amp;key={$key}'>{$key}</a>
+		</div>
+		<div class="col-md-8 progress-col">
+			<div class="meter {if="($value.translated + $value.outdated)/$value.count < 1"}red{elseif="$value.translated/$value.count < 1"}orange{/if}">
+				<span class='progress-info'>{$value.translated + $value.outdated}/{$value.count} translated {if="$value.outdated > 0"} - {$value.outdated} outdated{/if}</span>
+				<span class="bar" style="width: {$value.translated/$value.count*100}%"></span>
+			</div>
+		</div>
+	</div>
+{/loop}
+<!--<div class="row">
+	<div class="col-md-4">
+		<div class="card card-{cardStatus} card-inverse">
+			<div class="card-block">
+				<h4 class="card-title">{key}</h4>
+				<p class='card-text'>{description}</p>
+			</div>
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item"><b>Translation progress:</b> {transPct}% ({reviewed}/{totalSubkeys})</li>
+				<li class="list-group-item"><b>Review progress:</b> {reviewPct}% ({reviewed}/{totalSubkeys})</li>
+			</ul>
+			<div class="card-block">
+				<a href="#" class="card-link">Translate</a>
+				<a href="#" class="card-link">Review</a>
+			</div>
+		</div>
+	</div>
+</div>-->
